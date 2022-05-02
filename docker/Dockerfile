@@ -27,7 +27,7 @@ RUN mim install mmdet
 
 # Install MMPose
 RUN conda clean --all
-RUN git clone https://github.com/open-mmlab/mmpose.git /mmpose
+COPY ./* /mmpose/
 WORKDIR /mmpose
 RUN mkdir -p /mmpose/data
 ENV FORCE_CUDA="1"

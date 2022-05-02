@@ -1,5 +1,6 @@
 # Copyright (c) OpenMMLab. All rights reserved.
 import copy
+import json
 import os
 import os.path as osp
 from argparse import ArgumentParser
@@ -206,6 +207,9 @@ def main():
             tracking_thr=args.tracking_thr)
 
         pose_det_results_list.append(copy.deepcopy(pose_det_results))
+
+    with open('resources/pose_det_results_list.json','w') as pose_det_results_list_json_file:
+        json.dump(pose_det_results_list,pose_det_results_list_json_file)
 
     # Second stage: Pose lifting
     print('Stage 2: 2D-to-3D pose lifting.')

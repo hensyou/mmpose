@@ -174,7 +174,7 @@ ln -s $COCO_ROOT data/coco
 
 ## 利用 Docker 镜像安装 MMPose
 
-MMPose 提供一个 [Dockerfile](/docker/Dockerfile) 用户创建 docker 镜像。
+MMPose 提供一个 [Dockerfile](/Dockerfile) 用户创建 docker 镜像。
 
 ```shell
 # 创建拥有 PyTorch 1.6.0, CUDA 10.1, CUDNN 7 配置的 docker 镜像.

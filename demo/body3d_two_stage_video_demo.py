@@ -208,10 +208,12 @@ def main():
 
         pose_det_results_list.append(copy.deepcopy(pose_det_results))
 
-    with open('resources/pose_det_results_list.json','w') as pose_det_results_list_json_file:
+    # with open('resources/pose_det_results_list.json','w') as pose_det_results_list_json_file:
 
-        json_array=[ndarray.tolist() for ndarray in pose_det_results_list]
-        json.dump(json_array,pose_det_results_list_json_file)
+    print('pose_det_results_list')
+    for ndarray in pose_det_results_list:
+        print(ndarray)
+            # json.dump(json_array,pose_det_results_list_json_file)
 
     # Second stage: Pose lifting
     print('Stage 2: 2D-to-3D pose lifting.')
@@ -259,6 +261,7 @@ def main():
     num_instances = args.num_instances
     for i, pose_det_results in enumerate(
             mmcv.track_iter_progress(pose_det_results_list)):
+        print(f'frame:{i}pose_det_results:{pose_det_results}')
         # extract and pad input pose2d sequence
         pose_results_2d = extract_pose_sequence(
             pose_det_results_list,

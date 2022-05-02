@@ -20,6 +20,11 @@ RUN pip install xtcocotools
 RUN pip install --no-cache-dir --upgrade pip wheel setuptools
 RUN pip install --no-cache-dir mmcv-full==1.3.17 -f https://download.openmmlab.com/mmcv/dist/cu101/torch1.6.0/index.html
 
+# Install mmdet
+
+RUN pip install openmim
+RUN mim install mmdet
+
 # Install MMPose
 RUN conda clean --all
 RUN git clone https://github.com/open-mmlab/mmpose.git /mmpose

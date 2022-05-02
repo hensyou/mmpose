@@ -29,9 +29,9 @@ RUN mim install mmdet
 
 # Install MMPose
 RUN conda clean --all
-COPY requirements/* /mmpose/requirements/
-COPY requirements.txt /mmpose/
+COPY / /mmpose/
 WORKDIR /mmpose
 RUN mkdir -p /mmpose/data
 ENV FORCE_CUDA="1"
+RUN pip install -r requirements/build.txt
 RUN pip install --no-cache-dir -e .

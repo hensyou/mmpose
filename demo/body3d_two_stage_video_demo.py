@@ -14,6 +14,7 @@ from mmpose.apis import (extract_pose_sequence, get_track_id,
                          inference_top_down_pose_model, init_pose_model,
                          process_mmdet_results, vis_3d_pose_result)
 from mmpose.core import Smoother
+from mmpose.datasets import Body3DH36MDataset
 
 try:
     from mmdet.apis import inference_detector, init_detector
@@ -278,7 +279,7 @@ def main():
         # Pose processing
         pose_lift_results_vis = []
         for idx, res in enumerate(pose_lift_results):
-            print(f' looping pose_lift_results at {idx}:')
+            # print(f' looping pose_lift_results at {idx}:')
             keypoints_3d = res['keypoints_3d']
             # exchange y,z-axis, and then reverse the direction of x,z-axis
             keypoints_3d = keypoints_3d[..., [0, 2, 1]]
@@ -294,9 +295,10 @@ def main():
             instance_id = det_res['track_id']
             res['title'] = f'Prediction ({instance_id})'
             # only visualize the target frame
-            res['keypoints'] = det_res['keypoints']
+            res['keypoints'] = dict(zip(Body3DH36MDataset.JOINT_NAMES, det_res['keypoints']))
             res['bbox'] = det_res['bbox']
             res['track_id'] = instance_id
+            res['frame_number']=i
             pose_lift_results_vis.append(res)
         pose_lift_results_vis_list.append(pose_lift_results_vis)
         # Smoothing

@@ -208,15 +208,9 @@ def main():
 
         pose_det_results_list.append(copy.deepcopy(pose_det_results))
 
-    # with open('resources/pose_det_results_list.json','w') as pose_det_results_list_json_file:
-
-    print('pose_det_results_list')
-    for ndarray in pose_det_results_list:
-        print(type(ndarray))
-        # print(ndarray)
-    pose_det_results_list_json=json.dumps(pose_det_results_list,
-               cls=NumpyEncoder)
-    print(pose_det_results_list_json)
+    with open('resources/pose_det_results_list_2d.json','w') as pose_det_results_list_json_file:
+        json.dump(pose_det_results_list,fp=pose_det_results_list_json_file,
+                   cls=NumpyEncoder)
 
     # Second stage: Pose lifting
     print('Stage 2: 2D-to-3D pose lifting.')
@@ -264,7 +258,6 @@ def main():
     num_instances = args.num_instances
     for i, pose_det_results in enumerate(
             mmcv.track_iter_progress(pose_det_results_list)):
-        print(f'frame:{i}pose_det_results:{pose_det_results}')
         # extract and pad input pose2d sequence
         pose_results_2d = extract_pose_sequence(
             pose_det_results_list,
@@ -327,6 +320,9 @@ def main():
                              f'vis_{osp.basename(args.video_path)}'), fourcc,
                     fps, (img_vis.shape[1], img_vis.shape[0]))
             writer.write(img_vis)
+    with open('resources/pose_lift_results_vis.json','w') as pose_lift_results_vis_json_file:
+        json.dump(pose_lift_results_vis,fp=pose_lift_results_vis_json_file,
+                   cls=NumpyEncoder)
 
     if save_out_video:
         writer.release()

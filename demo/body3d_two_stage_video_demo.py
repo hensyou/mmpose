@@ -212,8 +212,10 @@ def main():
 
     print('pose_det_results_list')
     for ndarray in pose_det_results_list:
-        print(ndarray)
-            # json.dump(json_array,pose_det_results_list_json_file)
+        print(type(ndarray))
+        # print(ndarray)
+    pose_det_results_list_json=json.dumps(pose_det_results_list)
+    print(pose_det_results_list_json)
 
     # Second stage: Pose lifting
     print('Stage 2: 2D-to-3D pose lifting.')

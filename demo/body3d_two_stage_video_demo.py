@@ -214,7 +214,8 @@ def main():
     for ndarray in pose_det_results_list:
         print(type(ndarray))
         # print(ndarray)
-    pose_det_results_list_json=json.dumps(pose_det_results_list)
+    pose_det_results_list_json=json.dumps(pose_det_results_list,
+               cls=NumpyEncoder)
     print(pose_det_results_list_json)
 
     # Second stage: Pose lifting
@@ -329,6 +330,12 @@ def main():
 
     if save_out_video:
         writer.release()
+
+class NumpyEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        return json.JSONEncoder.default(self, obj)
 
 
 if __name__ == '__main__':

@@ -256,6 +256,7 @@ def main():
         smoother = None
 
     num_instances = args.num_instances
+    pose_lift_results_vis_list=[]
     for i, pose_det_results in enumerate(
             mmcv.track_iter_progress(pose_det_results_list)):
         # extract and pad input pose2d sequence
@@ -277,6 +278,7 @@ def main():
         # Pose processing
         pose_lift_results_vis = []
         for idx, res in enumerate(pose_lift_results):
+            print(f' looping pose_lift_results at {idx}:')
             keypoints_3d = res['keypoints_3d']
             # exchange y,z-axis, and then reverse the direction of x,z-axis
             keypoints_3d = keypoints_3d[..., [0, 2, 1]]
@@ -296,7 +298,7 @@ def main():
             res['bbox'] = det_res['bbox']
             res['track_id'] = instance_id
             pose_lift_results_vis.append(res)
-
+        pose_lift_results_vis_list.append(pose_lift_results_vis)
         # Smoothing
         if smoother:
             pose_lift_results = smoother.smooth(pose_lift_results)
@@ -321,7 +323,7 @@ def main():
                     fps, (img_vis.shape[1], img_vis.shape[0]))
             writer.write(img_vis)
     with open('resources/pose_lift_results_vis.json','w') as pose_lift_results_vis_json_file:
-        json.dump(pose_lift_results_vis,fp=pose_lift_results_vis_json_file,
+        json.dump(pose_lift_results_vis_list,fp=pose_lift_results_vis_json_file,
                    cls=NumpyEncoder)
 
     if save_out_video:

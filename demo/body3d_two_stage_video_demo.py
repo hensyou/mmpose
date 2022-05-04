@@ -295,7 +295,8 @@ def main():
             instance_id = det_res['track_id']
             res['title'] = f'Prediction ({instance_id})'
             # only visualize the target frame
-            res['keypoints'] = dict(zip(Body3DH36MDataset.JOINT_NAMES, det_res['keypoints']))
+            res['keypoints_named'] = dict(zip(Body3DH36MDataset.JOINT_NAMES, det_res['keypoints']))
+            res['keypoints'] = det_res['keypoints']
             res['bbox'] = det_res['bbox']
             res['track_id'] = instance_id
             res['frame_number']=i

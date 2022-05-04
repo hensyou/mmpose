@@ -336,7 +336,7 @@ class NumpyEncoder(json.JSONEncoder):
         if isinstance(obj, np.ndarray):
             return obj.tolist()
         if isinstance(obj, np.float32) or isinstance(obj, np.float64):
-            return float(obj)
+            return round(float(obj),4)
         return json.JSONEncoder.default(self, obj)
 
 

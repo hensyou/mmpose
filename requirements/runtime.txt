@@ -9,3 +9,4 @@ pillow
 scipy
 torchvision
 xtcocotools>=1.12
+sk-video

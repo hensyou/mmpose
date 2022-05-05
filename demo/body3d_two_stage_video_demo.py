@@ -209,9 +209,6 @@ def main():
 
         pose_det_results_list.append(copy.deepcopy(pose_det_results))
 
-    with open('resources/pose_det_results_list_2d.json','w') as pose_det_results_list_json_file:
-        json.dump(pose_det_results_list,fp=pose_det_results_list_json_file,
-                   cls=NumpyEncoder)
 
     # Second stage: Pose lifting
     print('Stage 2: 2D-to-3D pose lifting.')
@@ -325,7 +322,7 @@ def main():
                              f'vis_{osp.basename(args.video_path)}'), fourcc,
                     fps, (img_vis.shape[1], img_vis.shape[0]))
             writer.write(img_vis)
-    with open('resources/pose_lift_results_vis.json','w') as pose_lift_results_vis_json_file:
+    with open(f'resources/pose_lift_results_{osp.basename(args.video_path)}.json','w') as pose_lift_results_vis_json_file:
         json.dump(pose_lift_results_vis_list,fp=pose_lift_results_vis_json_file,
                    cls=NumpyEncoder)
 

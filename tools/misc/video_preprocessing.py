@@ -6,11 +6,14 @@ import cv2
 
 from tools.misc import ergo_logger
 
-logger=ergo_logger.get_logger('video_preprocess.log')
+logger = ergo_logger.get_logger('video_preprocess.log')
+
+
 class VideoPreprocessor():
     def __init__(self):
         pass
-    @classmethod
+
+    @staticmethod
     def reduce_rate_and_resize(video_file):
         logger.info(f'********************************')
         logger.info(f'Processing {video_file}')
@@ -28,18 +31,19 @@ class VideoPreprocessor():
         adjusted_frames = []
         while success:
             # cv2.imwrite(f'{str(output_path)}/frame{count}.png', image)  # save frame as JPEG file
-            if sar!=1:
+            if sar != 1:
                 image = cv2.resize(src=image, dsize=(int(dar * height), int(height)), interpolation=cv2.INTER_AREA)
             adjusted_frames.append(image)
             success, image = vidcap.read()
             logger.info(f'Read frame {count}')
             count += 1
-        output_video=os.path.join(os.path.dirname(video_file),os.path.basename(video_file).replace('.mp4','_r10.mp4'))
+        output_video = os.path.join(os.path.dirname(video_file),
+                                    os.path.basename(video_file).replace('.mp4', '_r10.mp4'))
         VideoPreprocessor.frames_to_video_using_ffmpeg(frames=adjusted_frames, output_path=output_video, rate=10)
         return output_video
 
-    @classmethod
-    def frames_to_video_using_ffmpeg(frames=None, output_path=None,rate=10):
+    @staticmethod
+    def frames_to_video_using_ffmpeg(frames=None, output_path=None, rate=10):
         logger.info('frames_to_video() output = ' + str(output_path))
         import skvideo.io
         writer = skvideo.io.FFmpegWriter(output_path,
@@ -64,8 +68,9 @@ class VideoPreprocessor():
                 logger.info(str(ve))
 
         writer.close()
-    @classmethod
-    def get_aspect_ratios( video_file):
+
+    @staticmethod
+    def get_aspect_ratios(video_file):
         cmd = 'ffprobe -i "{}" -v quiet -print_format json -show_format -show_streams'.format(video_file)
         #     jsonstr = subprocess.getoutput(cmd)
         jsonstr = subprocess.check_output(cmd, shell=True, encoding='utf-8')
@@ -90,5 +95,3 @@ class VideoPreprocessor():
             sar = dar
         par = dar / sar
         return dar, sar, par
-
-

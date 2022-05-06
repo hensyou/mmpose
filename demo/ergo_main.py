@@ -62,28 +62,28 @@ def convert_keypoint_definition(keypoints, pose_det_dataset,
 
 def main():
     parser = ArgumentParser()
-    parser.add_argument('det_config',
+    parser.add_argument('-det_config',
                         default=r'demo/mmdetection_cfg/faster_rcnn_r50_fpn_coco.py',
                         help='Config file for detection')
-    parser.add_argument('det_checkpoint',
+    parser.add_argument('-det_checkpoint',
                         default=r'resources/faster_rcnn_r50_fpn_1x_coco_20200130-047c8118.pth',
                         help='Checkpoint file for detection')
     parser.add_argument(
-        'pose_detector_config',
+        '-pose_detector_config',
         type=str,
         default=r'configs/body/2d_kpt_sview_rgb_img/topdown_heatmap/coco/hrnet_w48_coco_256x192.py',
         help='Config file for the 1st stage 2D pose detector')
     parser.add_argument(
-        'pose_detector_checkpoint',
+        '-pose_detector_checkpoint',
         type=str,
         default=r'resources/hrnet_w48_coco_256x192-b9e0b3ab_20200708.pth',
         help='Checkpoint file for the 1st stage 2D pose detector')
     parser.add_argument(
-        'pose_lifter_config',
+        '-pose_lifter_config',
         default=r'configs/body/3d_kpt_sview_rgb_vid/video_pose_lift/h36m/videopose3d_h36m_243frames_fullconv_supervised_cpn_ft.py',
         help='Config file for the 2nd stage pose lifter model')
     parser.add_argument(
-        'pose_lifter_checkpoint',
+        '-pose_lifter_checkpoint',
         default=r'resources/videopose_h36m_243frames_fullconv_supervised_cpn_ft-88f5abbb_20210527.pth',
         help='Checkpoint file for the 2nd stage pose lifter model')
     parser.add_argument(

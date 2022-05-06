@@ -3,6 +3,7 @@ import copy
 import json
 import os
 import os.path as osp
+import shutil
 from argparse import ArgumentParser
 
 import cv2
@@ -335,7 +336,8 @@ def main():
                              f'vis_{osp.basename(args.video_path)}'), fourcc,
                     fps, (img_vis.shape[1], img_vis.shape[0]))
             writer.write(img_vis)
-    with open(f'pose_results/pose_results_{osp.basename(args.video_path)}.json',
+    shutil.copy(adjusted_video,f'pose_results/{osp.basename(args.video_path)}')
+    with open(f'pose_results/{osp.basename(args.video_path)}.json',
               'w') as pose_lift_results_vis_json_file:
         json.dump(pose_lift_results_vis_list, fp=pose_lift_results_vis_json_file,
                   cls=NumpyEncoder)

@@ -35,3 +35,5 @@ RUN mkdir -p /mmpose/data
 ENV FORCE_CUDA="1"
 RUN pip install -r requirements/build.txt
 RUN pip install --no-cache-dir -e .
+RUN git pull
+ENTRYPOINT ['python',  'demo/ergo_main.py']

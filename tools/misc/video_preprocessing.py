@@ -6,7 +6,7 @@ import cv2
 
 from tools.misc import ergo_logger
 
-logger = ergo_logger.get_logger('video_preprocess.log')
+logger = ergo_logger.get_logger('pose_results/video_preprocess.log')
 
 
 class VideoPreprocessor():

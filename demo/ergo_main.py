@@ -26,7 +26,7 @@ try:
 except (ImportError, ModuleNotFoundError):
     has_mmdet = False
 
-logger = ergo_logger.get_logger('video_preprocess.log')
+logger = ergo_logger.get_logger('pose_results/ergo_engine.log')
 
 
 def convert_keypoint_definition(keypoints, pose_det_dataset,

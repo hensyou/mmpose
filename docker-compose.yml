@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  ergo-pose:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - /home/ergoinsight0/resources:/mmpose/resources
+      - /home/ergoinsight0/input_videos:/mmpose/input_videos
+      - /home/ergoinsight0/pose_results:/mmpose/pose_results
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [ gpu ]

@@ -1,6 +1,7 @@
-version: "3.9"
+version: '3'
 services:
   ergo-pose:
+    image: ergo-pose
     build: .
     ports:
       - "5000:5000"

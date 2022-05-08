@@ -369,7 +369,7 @@ def process_video():
 
     arg_for_main=['--video-path',video_path]
 
-    processthread = Thread(target=main, args=arg_for_main)
+    processthread = Thread(target=main, args=[arg_for_main])
     processthread.start()
 
     return f'''

@@ -66,7 +66,7 @@ def convert_keypoint_definition(keypoints, pose_det_dataset,
         raise NotImplementedError
 
 
-def main(args_from_code):
+def main(args_from_code :list):
     parser = ArgumentParser()
     parser.add_argument('-det_config',
                         default=r'demo/mmdetection_cfg/faster_rcnn_r50_fpn_coco.py',
@@ -369,7 +369,7 @@ def process_video():
 
     arg_for_main=['--video-path',video_path]
 
-    processthread = Thread(target=main, args=(arg_for_main))
+    processthread = Thread(target=main, args=arg_for_main)
     processthread.start()
 
     return f'''

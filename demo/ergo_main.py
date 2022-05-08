@@ -5,6 +5,7 @@ import os
 import os.path as osp
 import shutil
 from argparse import ArgumentParser
+from threading import Thread
 
 import cv2
 import mmcv
@@ -18,6 +19,10 @@ from mmpose.core import Smoother
 from mmpose.datasets import Body3DH36MDataset
 from tools.misc import ergo_logger
 from tools.misc.video_preprocessing import VideoPreprocessor
+from flask import Flask, request
+
+# create the Flask app
+app = Flask(__name__)
 
 try:
     from mmdet.apis import inference_detector, init_detector
@@ -61,7 +66,7 @@ def convert_keypoint_definition(keypoints, pose_det_dataset,
         raise NotImplementedError
 
 
-def main():
+def main(args_from_code):
     parser = ArgumentParser()
     parser.add_argument('-det_config',
                         default=r'demo/mmdetection_cfg/faster_rcnn_r50_fpn_coco.py',
@@ -162,7 +167,7 @@ def main():
 
     assert has_mmdet, 'Please install mmdet to run the demo.'
 
-    args = parser.parse_args()
+    args = parser.parse_args(args_from_code)
     assert args.show or (args.out_video_root != '')
     assert args.det_config is not None
     assert args.det_checkpoint is not None
@@ -354,7 +359,22 @@ class NumpyEncoder(json.JSONEncoder):
         if isinstance(obj, np.float32) or isinstance(obj, np.float64):
             return round(obj, 4)
         return json.JSONEncoder.default(self, obj)
+# GET requests will be blocked
 
+@app.route('/process_video', methods=['POST'])
+def process_video():
+    request_data = request.get_json()
+
+    video_path = request_data['video_path']
+
+    arg_for_main=['--video-path',video_path]
+
+    processthread = Thread(target=main, args=(arg_for_main))
+    processthread.start()
+
+    return f'''
+           received video: {video_path}. now processing..
+           '''
 
 if __name__ == '__main__':
-    main()
+    app.run(host= '0.0.0.0')
